@@ -5,8 +5,9 @@
 	$instagram = new Instagram('YOUR_APP_KEY');
 
 	$hashtag = "";
+	$limit = 30;
 	// Get popular media
-	$popular = $instagram->getImagesFromHashTag($hashtag);
+	$popular = $instagram->getTagMedia($hashtag, $limit);
 
 	// Display results
 	foreach ($popular->data as $data) {

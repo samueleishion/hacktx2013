@@ -92,12 +92,13 @@ class Instagram {
     }
   }
 
-
+/*
   public function getImagesFromHashtag($hashtag)
   {
     
   }
-
+*/
+  
   /**
    * Generates the OAuth login URL
    *
