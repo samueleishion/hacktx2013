@@ -92,12 +92,18 @@ class Instagram {
     }
   }
 
-/*
+
   public function getImagesFromHashtag($hashtag)
   {
-    
+      $limit = 30;
+      // Get popular media
+      $popular = $instagram->getTagMedia($hashtag, $limit);
+
+      // Display results
+      foreach ($popular->data as $data) {
+       echo "<img src=\"{$data->images->thumbnail->url}\">";
+      }
   }
-*/
   
   /**
    * Generates the OAuth login URL
