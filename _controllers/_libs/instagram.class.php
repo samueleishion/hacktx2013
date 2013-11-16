@@ -96,7 +96,7 @@ class Instagram {
   {
       $fp = fopen('data.txt', 'w');
       //write the headers
-      fwrite($fp, "Adj\t P:P(nos)\t Adj\t N:P(neg) \t Adj\t E:P(neutral)");
+      fwrite($fp, "Adj\t P:P(nos)\t Adj\t N:P(neg) \t Adj\t E:P(neutral)\n");
 
       fclose($fp);
   }
