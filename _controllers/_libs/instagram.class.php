@@ -92,6 +92,14 @@ class Instagram {
     }
   }
 
+  public function writeRDataFrame()
+  {
+      $fp = fopen('data.txt', 'w');
+      //write the headers
+      fwrite($fp, "Adj\t P:P(nos)\t Adj\t N:P(neg) \t Adj\t E:P(neutral)");
+
+      fclose($fp);
+  }
 
   public function getImagesFromHashtag($hashtag)
   {
