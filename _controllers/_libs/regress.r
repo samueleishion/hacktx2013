@@ -2,7 +2,7 @@
 # r --slave -f regress.r
 #
 
-file = "C:\\xampp\\htdocs\\_controllers\\_libs\\data.txt"
+file = "data.txt"
 
 #dataframe 
 df = read.table(file, header = T, sep = "\t")
