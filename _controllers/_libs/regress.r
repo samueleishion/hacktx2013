@@ -5,7 +5,8 @@
 file = "data.txt"
 
 #dataframe 
-df = read.table(file, header = T, sep = "\t")
+df = read.table(file,  header = FALSE, sep = "")
+names(df) = c("Adj", "Ppos", "Pneg", "Pneut", "Likes", "Highest")
 
 # response variables sentimentP(pos prob), sentimentN (neg prob), sentimentE (neutral prob)
 sentiment_P = df$Ppos
