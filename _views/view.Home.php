@@ -35,7 +35,7 @@ HTMLnav($page);
 		} 
 	} 
 
-	$instagram->writeRDataFrame($bucket); 
+	$instagram->writeRDataFrame($bucket,$fp); 
 	$bucket->sort(); 
 
 	echo "<hr>"; 

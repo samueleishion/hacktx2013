@@ -92,24 +92,31 @@ class Instagram {
     }
   }
 
-  public function writeRDataFrame(&$bucket)
+  public function writeRDataFrame(&$bucket,$fp)
   {
-      $fp = fopen('_controllers/_lib/data.txt', 'w');
-      //write the headers
-      // fwrite($fp, "Adj\tP:P(nos)\tAdj\tN:P(neg)\tAdj\tE:P(neut)\n");
-      fwrite($fp, "Adj\tPpos\tPneg\tPneut\tLikes\tHighest\n"); 
-      //fwrite($fp, "4\t .0854\t 4\t .0924 \t 4\t .0545\n");
+      $file = '_controllers/_libs/data.txt'; 
+      $fp = fopen($file, 'w'); 
+      if(file_exists($file)) {
+        //write the headers
+        fwrite($fp, "Adj\tPpos\tPneg\tPneut\tLikes\tHighest\n"); 
 
-			$posts = $bucket->getPosts();
-			foreach($posts as $post) {
-				$l = $post->getLikes();
-        $a = $post->getAdjectiveCount(); 
-				$p = $post->getProbabilityPositive();
-				$n = $post->getProbabilityNegative();
-				$o = $post->getProbabilityNeutral();
-        $h = $post->getSentimentType(); 
-				fwrite($fp, $a."\t".$p."\t".$n."\t".$o."\t".$l."\t".$h."\n"); 
-			}
+        $i = 1; 
+  			$posts = $bucket->getPosts();
+  			foreach($posts as $post) {
+  				$l = $post->getLikes();
+          $a = $post->getAdjectiveCount(); 
+  				$p = $post->getProbabilityPositive();
+  				$n = $post->getProbabilityNegative();
+  				$o = $post->getProbabilityNeutral();
+          $h = $post->getSentimentType(); 
+  				fwrite($fp, $i."\t".$a."\t".$p."\t".$n."\t".$o."\t".$l."\t".$h."\n"); 
+          $i++; 
+  			}
+      } else {
+        echo "file doesn't exist"; 
+        exec("pwd",$output); 
+        print_r($output); 
+      }
 	
       fclose($fp);
   }
