@@ -1,0 +1,2 @@
+Adj	 P:P(nos)	 Adj	 N:P(neg) 	 Adj	 E:P(neutral)
+4	 .0854	 4	 .0924 	 4	 .0545

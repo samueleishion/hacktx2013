@@ -18,4 +18,7 @@
  	 echo "<img src=\"{$data->images->thumbnail->url}\">";
 	}
 
+	//create r file
+	$instagram->writeRDataFrame();
+
 ?>
