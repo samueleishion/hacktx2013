@@ -92,12 +92,29 @@ class Instagram {
     }
   }
 
-/*
+  public function writeRDataFrame()
+  {
+      $fp = fopen('data.txt', 'w');
+      //write the headers
+      fwrite($fp, "Adj\t P:P(nos)\t Adj\t N:P(neg) \t Adj\t E:P(neutral)");
+
+      fclose($fp);
+  }
+
   public function getImagesFromHashtag($hashtag)
   {
-    
+      $limit = 30;
+      // Get popular media
+      $popular = $instagram->getTagMedia($hashtag, $limit);
+
+      // Display results
+      foreach ($popular->data as $data) {
+       echo "<img src=\"{$data->images->thumbnail->url}\">";
+      }
+
+      //supposed to return something but not sure what
+      return $popular->data;
   }
-*/
   
   /**
    * Generates the OAuth login URL
