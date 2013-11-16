@@ -98,7 +98,7 @@ class Instagram {
       $fp = fopen($file, 'w'); 
       if(file_exists($file)) {
         //write the headers
-        fwrite($fp, "Adj\tPpos\tPneg\tPneut\tLikes\tHighest\n"); 
+        // fwrite($fp, "Adj\tPpos\tPneg\tPneut\tLikes\tHighest\n"); 
 
         $i = 1; 
   			$posts = $bucket->getPosts();
@@ -109,7 +109,16 @@ class Instagram {
   				$n = $post->getProbabilityNegative();
   				$o = $post->getProbabilityNeutral();
           $h = $post->getSentimentType(); 
-  				fwrite($fp, $i."\t".$a."\t".$p."\t".$n."\t".$o."\t".$l."\t".$h."\n"); 
+
+          if(is_numeric($l)&&
+            is_numeric($a)&&
+            is_numeric($p)&&
+            is_numeric($n)&&
+            is_numeric($o)&&
+            is_numeric($h)) {
+              echo $a."&nbsp;&nbsp;&nbsp;".$p."&nbsp;&nbsp;&nbsp;".$n."&nbsp;&nbsp;&nbsp;".$o."&nbsp;&nbsp;&nbsp;".$l."&nbsp;&nbsp;&nbsp;".$h."<br>"; 
+  				    fwrite($fp, $a."\t".$p."\t".$n."\t".$o."\t".$l."\t".$h."\n"); 
+          }
           $i++; 
   			}
       } else {
