@@ -2,7 +2,7 @@
 # r --slave -f regress.r
 #
 
-file = "data.txt"
+file = "_controllers/_libs/data.txt"
 
 #dataframe 
 df = read.table(file,  header = FALSE, sep = "")
