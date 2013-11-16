@@ -92,14 +92,22 @@ class Instagram {
     }
   }
 
-  public function writeRDataFrame()
+  public function writeRDataFrame(&$bucket)
   {
-      $fp = fopen('data.txt', 'w');
+      $fp = fopen('C:\xampp\htdocs\_controllers\_libs\data.txt', 'w');
       //write the headers
-      fwrite($fp, "Adj\t P:P(nos)\t Adj\t N:P(neg) \t Adj\t E:P(neutral)\n");
-      fwrite($fp, "4\t .0854\t 4\t .0924 \t 4\t .0545\n");
+      fwrite($fp, "Adj\tP:P(nos)\tAdj\tN:P(neg)\tAdj\tE:P(neut)\n");
+      //fwrite($fp, "4\t .0854\t 4\t .0924 \t 4\t .0545\n");
 
-
+			$posts = $bucket->getPosts();
+			foreach($posts as $post) {
+				$l = $post->getLikes();
+				$p = $post->getProbabilityPositive();
+				$n = $post->getProbabilityNegative();
+				$o = $post->getProbabilityNeutral();
+				fwrite($fp, $l."\t".$p."\t".$l."\t".$n."\t".$l."\t".$o."\n");
+			}
+	
       fclose($fp);
   }
 

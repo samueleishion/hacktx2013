@@ -2,15 +2,15 @@
 # r --slave -f regress.r
 #
 
-file = "data.txt"
+file = "C:\\xampp\\htdocs\\_controllers\\_libs\\data.txt"
 
 #dataframe 
 df = read.table(file, header = T, sep = "\t")
 
 # response variables sentimentP(pos prob), sentimentN (neg prob), sentimentE (neutral prob)
-sentiment_P = df$P:P(nos)
-sentiment_N = df$N:P(neg)
-sentiment_E = df$E:P(neut)
+sentiment_P = df$P(nos)
+sentiment_N = df$P(neg)
+sentiment_E = df$P(neut)
 
 #explanatory variable couting the number of adjectives 
 adj_count = df$adj
