@@ -8,9 +8,9 @@ file = "data.txt"
 df = read.table(file, header = T, sep = "\t")
 
 # response variables sentimentP(pos prob), sentimentN (neg prob), sentimentE (neutral prob)
-sentiment_P = df$p(pos)
-sentiment_N = df$p(neg)
-sentiment_E = df$p(neut)
+sentiment_P = df$P:P(nos)
+sentiment_N = df$N:P(neg)
+sentiment_E = df$E:P(neut)
 
 #explanatory variable couting the number of adjectives 
 adj_count = df$adj
