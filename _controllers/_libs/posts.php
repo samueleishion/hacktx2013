@@ -1,39 +1,43 @@
 <?php 
 
-require_once('Unirect/Unirest.php'); 
+require_once('Unirest/Unirest.php'); 
 
-class Bucket() {
+class Bucket {
 	private $posts; 
 
 	public function __construct() {
-		$posts = array(); 
+		$this->posts = array(); 
 	}
 
 	public function addPost($post) {
 		$temp = new Post($post); 
-		array_push($temp); 
+		array_push($this->posts, $temp); 
 	} 
 
+	public function getPosts() {
+		return $this->posts; 
+	}
+
 	public function sort() {
-		mergeSort($posts); 
+		$this->mergeSort($this->posts); 
 	}
 
 	private function mergeSort($array) {
 		if(count($array) > 1) {
-			$left = leftHalf($array); 
-			$right = rightHalf($array); 
+			$left = $this->leftHalf($array); 
+			$right = $this->rightHalf($array); 
 
-			mergeSort($left); 
-			mergeSort($right); 
+			$this->mergeSort($left); 
+			$this->mergeSort($right); 
 
-			merge($array, $left, $right); 
+			$this->merge($array, $left, $right); 
 		}
 	}
 
 	private function leftHalf($array) {
 		$size = count($array)/2; 
 		$left = array(); 
-		for($i = 0; i< $size; $i++) {
+		for($i = 0; $i< $size; $i++) {
 			$left[$i] = $array[$i]; 
 		}
 		return $left; 
@@ -63,11 +67,9 @@ class Bucket() {
 			}
 		}
 	}
-
-
 }
 
-class Post() {
+class Post {
 	private $post; 				// actual json instagram post 
 	private $text; 				// text from post 
 	private $img; 				// image from post 
@@ -79,21 +81,24 @@ class Post() {
 								// 		-1 : negative 
 								// 		0 : neutral 
 								// 		1 : positive 
+	private $lamda; 
 
-	public function __construct($instagram_post) {
-		if($instagram_post!=NULL && $instagram_post!="") {
+	public function __construct($instagram_post) { 
+		if(is_object($instagram_post) && (count(get_object_vars($instagram_post)))) {
 			$this->post = $instagram_post; 
 			$this->sentiment = array(); 
 			$this->sentiment["pos"] = 0; 
 			$this->sentiment["neg"] = 0; 
 			$this->sentiment["neu"] = 0; 
+			$this->lambda = 1; 
+			$this->adjectives += $this->lambda; 
 			$this->getInfoFromPost(); 
 		}
 	} 
 
 	private function getInfoFromPost() {
 		// get post
-		$post = json_decode("".$this->post); 
+		$post = $this->post; 
 
 		// get text 
 		$this->text = $post->caption->text; 
@@ -110,22 +115,23 @@ class Post() {
 			array(
 				"language" => "english",
 				"output" => "tagged",
-				"text" => $post 
+				"text" => $this->text 
 			)
 		); 
-		$text = json_decode($response->raw_body); 
+		// echo $response->raw_body.'<br>'; 
+		$json = json_decode($response->raw_body); 
 		$this->partsOfSpeech = $json->{"text"}; 
+		// echo $this->partsOfSpeech.'<br>'; 
 
 		// counting adjectives 
 		$temp = explode(" ",$this->partsOfSpeech); 
 		foreach($temp as $key => $value) {
-			$tag = explode("/",$value) {
-				if($tag[1]=="JJ") $this->adjectives += 1; 
-			}
+			$tag = explode("/",$value);
+			if($tag[1]=="JJ") $this->adjectives += 1; 
 		}
 
 		// counting likes 
-		$this->likes = $post->likes->count; 
+		$this->likes = $post->likes->count+$lamda; 
 
 		// get sentiment analysis 
 		$response = Unirest::post(
@@ -134,14 +140,19 @@ class Post() {
 		    	"X-Mashape-Authorization" => "ZIgUr7Mpn4QrBOfdKJQYfvejZsYKyGFQ"
 			),
 			array(
-		 		"text" => $this->post,
+		 		"text" => $this->text,
 				"language" => "english"
 			) 
 		);
-		$sent = json_decode($response); 
-		$this->sentiment["pos"] = $sent->probability->pos; 
-		$this->sentiment["neg"] = $sent->probability->neg; 
-		$this->sentiment["neu"] = $sent->probability->neutral; 
+		// echo $response.'<br>'; 
+		// $sent = json_decode($response); 
+		$sent = json_decode($response->raw_body); 
+		$this->sentiment["pos"] = $sent->{"probability"}->pos; 
+		$this->sentiment["neg"] = $sent->{"probability"}->neg; 
+		$this->sentiment["neu"] = $sent->{"probability"}->neutral; 
+		// echo "P(pos) = ".$this->sentiment["pos"].'<br>'; 
+		// echo "P(neg) = ".$this->sentiment["neg"].'<br>'; 
+		// echo "P(neutral) = ".$this->sentiment["neu"].'<br>'; 
 
 		// getting sentiment type 
 		if($this->sentiment["pos"] > $this->sentiment["neg"] && $this->sentiment["pos"] > $this->sentiment["neu"])
