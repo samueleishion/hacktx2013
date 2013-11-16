@@ -113,6 +113,7 @@ class Instagram {
       }
 
       //supposed to return something but not sure what
+      return $popular->data;
   }
   
   /**
