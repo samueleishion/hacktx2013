@@ -94,7 +94,7 @@ class Instagram {
 
   public function writeRDataFrame(&$bucket)
   {
-      $fp = fopen('C:\xampp\htdocs\_controllers\_libs\data.txt', 'w');
+      $fp = fopen('_controllers/_lib/data.txt', 'w');
       //write the headers
       // fwrite($fp, "Adj\tP:P(nos)\tAdj\tN:P(neg)\tAdj\tE:P(neut)\n");
       fwrite($fp, "Adj\tPpos\tPneg\tPneut\tLikes\tHighest\n"); 

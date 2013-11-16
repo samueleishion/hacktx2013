@@ -20,24 +20,27 @@ HTMLnav($page);
   <? 
 	$menu = $restaurant->getMenu()->getDishes(); 
 	foreach($menu as $item) {
-		echo $item->getName().'<br>'; 
-		extractWords($row{'name'}, $hashtags);
+		// echo '<img src="'.$item->getURL().'">'; 
+		extractWords($item->getName(), $hashtags);
 	}
 
 	echo "<hr>"; 
 
-	foreach($hashtags as $tag) {
+	foreach($hashtags as $tag) { 
 		$popular = $instagram->getImagesFromHashtag($tag); 
-		foreach($popular as $key=>$val) {
+		foreach($popular as $key=>$val) { 
 			$bucket->addPost($val); 
-			$post = $val->caption->text; 
-			echo $post.'<Br>'; 
-		}
-	}
+			// $post = $val->caption->text; 
+			// echo $post.'<Br>'; 
+		} 
+	} 
 
 	$instagram->writeRDataFrame($bucket); 
 	$bucket->sort(); 
 
+	echo "<hr>"; 
+
+	echo "out: "; 
 	exec("r --slave -f _controllers/_libs/regress.r",$output); 
 	print_r($output); 
   ?>

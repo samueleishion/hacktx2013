@@ -88,6 +88,13 @@ $instagram = new Instagram('a7bc3ca739bc49c092767a8607aff9b3');
 foreach($hashtags as $tag) {
 	$popular = $instagram->getImagesFromHashtag($tag);
 
+	
+	$sentiment = array(); 
+	$sentiment["pos"] = 0; 
+	$sentiment["neg"] = 0; 
+	$sentiment["neu"] = 0; 
+	$adjectives = 1; 
+
 	foreach($popular as $key => $val) {
 		$bucket->addPost($val);
 		$post = $val->caption->text; 
