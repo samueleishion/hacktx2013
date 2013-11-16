@@ -57,4 +57,16 @@ function stringContains($haystack,$needle) {
 	return (strpos($haystack,$needle)===false) ? false : true; 
 }
 
+
+function extractWords($str, &$hashtags) {
+	$words = explode(' ', $str);
+	$combined = "";
+	foreach($words as $word) {
+		if(strlen($word) > 3)
+		//	array_push($hashtags, $word);
+			$combined = $combined.$word;
+	}
+	array_push($hashtags, $combined);
+}
+
 ?>

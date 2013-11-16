@@ -96,16 +96,19 @@ class Instagram {
   {
       $fp = fopen('C:\xampp\htdocs\_controllers\_libs\data.txt', 'w');
       //write the headers
-      fwrite($fp, "Adj\tP:P(nos)\tAdj\tN:P(neg)\tAdj\tE:P(neut)\n");
+      // fwrite($fp, "Adj\tP:P(nos)\tAdj\tN:P(neg)\tAdj\tE:P(neut)\n");
+      fwrite($fp, "Adj\tPpos\tPneg\tPneut\tLikes\tHighest\n"); 
       //fwrite($fp, "4\t .0854\t 4\t .0924 \t 4\t .0545\n");
 
 			$posts = $bucket->getPosts();
 			foreach($posts as $post) {
 				$l = $post->getLikes();
+        $a = $post->getAdjectiveCount(); 
 				$p = $post->getProbabilityPositive();
 				$n = $post->getProbabilityNegative();
 				$o = $post->getProbabilityNeutral();
-				fwrite($fp, $l."\t".$p."\t".$l."\t".$n."\t".$l."\t".$o."\n");
+        $h = $post->getSentimentType(); 
+				fwrite($fp, $a."\t".$p."\t".$n."\t".$o."\t".$l."\t".$h."\n"); 
 			}
 	
       fclose($fp);
@@ -118,9 +121,9 @@ class Instagram {
       $popular = $this->getTagMedia($hashtag, $limit);
 
       // Display results
-      foreach ($popular->data as $data) {
-       echo "<img src=\"{$data->images->thumbnail->url}\">";
-      }
+      // foreach ($popular->data as $data) {
+      //  echo "<img src=\"{$data->images->thumbnail->url}\">";
+      // }
 
       //supposed to return something but not sure what
       return $popular->data;
