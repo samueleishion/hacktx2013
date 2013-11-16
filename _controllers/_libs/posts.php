@@ -22,7 +22,7 @@ class Bucket {
 		$this->mergeSort($this->posts); 
 	}
 
-	private function mergeSort($array) {
+	private function mergeSort(&$array) {
 		if(count($array) > 1) {
 			$left = $this->leftHalf($array); 
 			$right = $this->rightHalf($array); 
@@ -34,7 +34,7 @@ class Bucket {
 		}
 	}
 
-	private function leftHalf($array) {
+	private function leftHalf(&$array) {
 		$size = count($array)/2; 
 		$left = array(); 
 		for($i = 0; $i< $size; $i++) {
@@ -43,7 +43,7 @@ class Bucket {
 		return $left; 
 	}
 
-	private function rightHalf($array) {
+	private function rightHalf(&$array) {
 		$size = count($array)/2; 
 		$count = count($array)-$size; 
 		$right = array(); 
@@ -53,7 +53,7 @@ class Bucket {
 		return $right; 
 	}
 
-	private function merge($result, $left, $right) {
+	private function merge(&$result, &$left, &$right) {
 		$l = 0; 
 		$r = 0; 
 
@@ -131,7 +131,7 @@ class Post {
 		}
 
 		// counting likes 
-		$this->likes = $post->likes->count+$lamda; 
+		$this->likes = $post->likes->count+$this->lamda; 
 
 		// get sentiment analysis 
 		$response = Unirest::post(

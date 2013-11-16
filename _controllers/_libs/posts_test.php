@@ -29,6 +29,7 @@ foreach($posts as $post) {
 	echo 'P(pos): '.$post->getProbabilityPositive().'<br>'; 
 	echo 'P(neg): '.$post->getProbabilityNegative().'<br>'; 
 	echo 'P(neu): '.$post->getProbabilityNeutral().'<br>'; 
+	echo '<img src="'.$post->getImg().'"><hr>'; 
 	echo '<br>'; 
 }
 
