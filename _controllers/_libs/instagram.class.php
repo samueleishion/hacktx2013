@@ -116,7 +116,7 @@ class Instagram {
             is_numeric($n)&&
             is_numeric($o)&&
             is_numeric($h)) {
-              echo $a."&nbsp;&nbsp;&nbsp;".$p."&nbsp;&nbsp;&nbsp;".$n."&nbsp;&nbsp;&nbsp;".$o."&nbsp;&nbsp;&nbsp;".$l."&nbsp;&nbsp;&nbsp;".$h."<br>"; 
+              // echo $a."&nbsp;&nbsp;&nbsp;".$p."&nbsp;&nbsp;&nbsp;".$n."&nbsp;&nbsp;&nbsp;".$o."&nbsp;&nbsp;&nbsp;".$l."&nbsp;&nbsp;&nbsp;".$h."<br>"; 
   				    fwrite($fp, $a."\t".$p."\t".$n."\t".$o."\t".$l."\t".$h."\n"); 
           }
           $i++; 
