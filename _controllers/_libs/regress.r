@@ -33,7 +33,6 @@ regress_lh = cor(count_likes, highest_prob, method = "pearson")
 prob_values = c(regress_adjP,regress_adjN,regress_adjE)
 biggest_prob =max(prob_values)
 
-cat("\n")
 cat(biggest_prob*regress_lh)
-cat("\n")
+
 
