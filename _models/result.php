@@ -1,6 +1,7 @@
 <?php
-require_once("..\_controllers\_libs\instagram.class.php"); 
-require_once("..\_controllers\_libs\posts.php");
+require_once("../_controllers/settings.php"); 
+require_once("../_controllers/_libs/instagram.class.php"); 
+require_once("../_controllers/_libs/posts.php");
 ?>
 
 <html>
@@ -30,13 +31,14 @@ table.bottomBorder td, table.bottomBorder th { border-bottom:1px dotted black;pa
 $restaurant = $_POST["menu"];
 
 /* Connect to Database Server */
-$username = "root";
-$password = "utexas";
-$hostname = "10.146.34.25";
-$db_name = "Restaurants";
+// $username = "root";
+// $password = "utexas";
+// $hostname = "10.146.34.25";
+// $db_name = "Restaurants";
 
-$con = mysqli_connect($hostname, $username, $password, $db_name) 
- or die("Unable to connect to MySQL");
+// $con = mysqli_connect($hostname, $username, $password, $db_name) 
+$con = $dblink; 
+ // or die("Unable to connect to MySQL");
 
 $hashtags = array();
 
@@ -64,7 +66,6 @@ while ($row = mysqli_fetch_array($result)) {
 ?> <table class="bottomBorder"> <?php
 $query = "SELECT * FROM dish WHERE menu_id='".$menu_id."' LIMIT 1";
 $result = mysqli_query($con, $query);
-$result = mysqli_query($con, $query);
 
 while ($row = mysqli_fetch_array($result)) {
 	$dish = $row{'name'};
@@ -86,6 +87,13 @@ $instagram = new Instagram('a7bc3ca739bc49c092767a8607aff9b3');
 
 foreach($hashtags as $tag) {
 	$popular = $instagram->getImagesFromHashtag($tag);
+
+	
+	$sentiment = array(); 
+	$sentiment["pos"] = 0; 
+	$sentiment["neg"] = 0; 
+	$sentiment["neu"] = 0; 
+	$adjectives = 1; 
 
 	foreach($popular as $key => $val) {
 		$bucket->addPost($val);

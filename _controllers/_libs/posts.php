@@ -107,17 +107,19 @@ class Post {
 		$this->img = $post->images->standard_resolution->url; 
 		
 		// get parts of speech 
-		$response = Unirest::post(
-			"https://japerk-text-processing.p.mashape.com/tag/", 
-			array(
-				"X-Mashape-Authorization" => "ZIgUr7Mpn4QrBOfdKJQYfvejZsYKyGFQ"
-			), 
-			array(
-				"language" => "english",
-				"output" => "tagged",
-				"text" => $this->text 
-			)
-		); 
+		try {
+			$response = Unirest::post(
+				"https://japerk-text-processing.p.mashape.com/tag/", 
+				array(
+					"X-Mashape-Authorization" => "ZIgUr7Mpn4QrBOfdKJQYfvejZsYKyGFQ"
+				), 
+				array(
+					"language" => "english",
+					"output" => "tagged",
+					"text" => $this->text 
+				)
+			); 
+		} catch (Exception $e) { echo ""; }
 		// echo $response->raw_body.'<br>'; 
 		$json = json_decode($response->raw_body); 
 		$this->partsOfSpeech = $json->{"text"}; 
@@ -134,16 +136,20 @@ class Post {
 		$this->likes = $post->likes->count+$this->lamda; 
 
 		// get sentiment analysis 
-		$response = Unirest::post(
-			"https://japerk-text-processing.p.mashape.com/sentiment/",
-			array(
-		    	"X-Mashape-Authorization" => "ZIgUr7Mpn4QrBOfdKJQYfvejZsYKyGFQ"
-			),
-			array(
-		 		"text" => $this->text,
-				"language" => "english"
-			) 
-		);
+		try {
+			$response = Unirest::post(
+				"https://japerk-text-processing.p.mashape.com/sentiment/",
+				array(
+			    	"X-Mashape-Authorization" => "ZIgUr7Mpn4QrBOfdKJQYfvejZsYKyGFQ"
+				),
+				array(
+			 		"text" => $this->text,
+					"language" => "english"
+				) 
+			);
+		} catch(Exception $e) {
+			echo ""; 
+		}
 		// echo $response.'<br>'; 
 		// $sent = json_decode($response); 
 		$sent = json_decode($response->raw_body); 
