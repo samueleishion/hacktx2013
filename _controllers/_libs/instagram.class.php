@@ -111,6 +111,8 @@ class Instagram {
       foreach ($popular->data as $data) {
        echo "<img src=\"{$data->images->thumbnail->url}\">";
       }
+
+      //supposed to return something but not sure what
   }
   
   /**
